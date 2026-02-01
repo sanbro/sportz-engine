@@ -1,19 +1,19 @@
 import arcjet, {shield, detectBot, slidingWindow} from "@arcjet/node";
 
 const arcjetKey =  process.env.ARCJET_KEY;
-const arkjetMode = process.env.ARKJET_MODE === 'DRY_RUN' ? 'DRY_RUN' : 'LIVE';
+const arcjetMode = process.env.ARCJET_MODE === 'DRY_RUN' ? 'DRY_RUN' : 'LIVE';
 
 if(!arcjetKey) throw new Error(
-    'ARKJET_KEY environment variable is required'
+    'ARCJET_KEY environment variable is required'
 )
 
 export const httpArcjet =  arcjetKey ?
     arcjet({
         key: arcjetKey,
         rules: [
-            shield({ mode: arkjetMode}),
-            detectBot({ mode: arkjetMode, allow: ['CATEGORY:SEARCH_ENGINE', 'CATEGORY:PREVIEW']}),
-            slidingWindow({ mode: arkjetMode, interval: '10s', max: 50})
+            shield({ mode: arcjetMode}),
+            detectBot({ mode: arcjetMode, allow: ['CATEGORY:SEARCH_ENGINE', 'CATEGORY:PREVIEW']}),
+            slidingWindow({ mode: arcjetMode, interval: '10s', max: 50})
         ]
     }) : null;
 
@@ -21,9 +21,9 @@ export const wsArcjet =  arcjetKey ?
     arcjet({
         key: arcjetKey,
         rules: [
-            shield({ mode: arkjetMode}),
-            detectBot({ mode: arkjetMode, allow: ['CATEGORY:SEARCH_ENGINE', 'CATEGORY:PREVIEW']}),
-            slidingWindow({ mode: arkjetMode, interval: '2s', max: 5})
+            shield({ mode: arcjetMode}),
+            detectBot({ mode: arcjetMode, allow: ['CATEGORY:SEARCH_ENGINE', 'CATEGORY:PREVIEW']}),
+            slidingWindow({ mode: arcjetMode, interval: '2s', max: 5})
         ]
     }) : null;
 

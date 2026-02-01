@@ -46,6 +46,7 @@ export function attachWebSocketServer(server) {
             }catch (e) {
                 console.error('WS connection error',e)
                 socket.close(1011, 'Server Security error');
+                return;
             }
         }
         socket.isAlive = true;
