@@ -34,7 +34,7 @@ matchRouter.post("/", async (req, res) => {
     if (!parsed.success) {
         return res.status(400).json({ error: "Invalid request", details: JSON.stringify(parsed.error)});
     }
-    const {data: {startTime, endTime, homeScore, awayScore }} = parsed.data;
+    const {data: {startTime, endTime, homeScore, awayScore }} = parsed;
     try{
         const [event] = await db.insert(matches).values({
             ...parsed.data,
@@ -44,7 +44,9 @@ matchRouter.post("/", async (req, res) => {
             awayScore : awayScore ?? 0,
             status: getMatchStatus(startTime, endTime),
         }).returning();
-
+        if(res.app.locals.broadCastMatchCreated) {
+            res.app.locals.broadCastMatchCreated(event);
+        }
         return res.status(201).json({data: event});
     }catch (e) {
         console.error("Failed to create match", e);
