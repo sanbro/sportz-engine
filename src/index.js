@@ -5,9 +5,10 @@ import {attachWebSocketServer} from "./ws/server.js";
 
 
 
-const PORT = parseInt(process.env.PORT,10) || 8000;
-if (isNaN(PORT) || PORT < 1 || PORT > 65535) {
-    throw new Error(`Invalid PORT: ${process.env.PORT}`);
+const rawPort = process.env.PORT;
+const PORT = rawPort === undefined ? 8000 : Number(rawPort);
+if (!Number.isInteger(PORT) || PORT < 1 || PORT > 65535) {
+   throw new Error(`Invalid PORT: ${process.env.PORT}`);
 }
 const HOST = process.env.HOST || '0.0.0.0' ;
 const app = express();
