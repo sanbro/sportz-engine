@@ -2,6 +2,7 @@ import  express from "express";
 import  {matchRouter} from "./routes/matches.js";
 import * as http from "http";
 import {attachWebSocketServer} from "./ws/server.js";
+import {securityMiddleware} from "./arcjet.js";
 
 
 
@@ -14,7 +15,7 @@ const HOST = process.env.HOST || '0.0.0.0' ;
 const app = express();
 app.use(express.json());
 const server = http.createServer(app);
-
+app.use(securityMiddleware());
 app.use('/matches', matchRouter);
 
 const { broadCastMatchCreated } = attachWebSocketServer(server)
