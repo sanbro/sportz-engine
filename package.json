@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "node --watch src/index.js",
-    "start" : "node src/index.js"
+    "start": "node src/index.js",
+    "db:generate": "drizzle-kit generate",
+    "db:studio" : "drizzle-kit studio",
+    "db:migrate": "drizzle-kit migrate"
   },
   "repository": {
     "type": "git",
@@ -20,12 +23,15 @@
   },
   "homepage": "https://github.com/sanbro/sportz-engine#readme",
   "dependencies": {
+    "dotenv": "^17.2.3",
     "drizzle-orm": "^0.45.1",
     "express": "^5.2.1",
     "pg": "^8.18.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "drizzle-kit": "^0.31.8"
+    "@types/pg": "^8.16.0",
+    "drizzle-kit": "^0.31.8",
+    "tsx": "^4.21.0"
   }
 }
