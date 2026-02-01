@@ -5,7 +5,10 @@ import {attachWebSocketServer} from "./ws/server.js";
 
 
 
-const PORT = Number(process.env.PORT) || 8000;
+const PORT = parseInt(process.env.PORT,10) || 8000;
+if (isNaN(PORT) || PORT < 1 || PORT > 65535) {
+    throw new Error(`Invalid PORT: ${process.env.PORT}`);
+}
 const HOST = process.env.HOST || '0.0.0.0' ;
 const app = express();
 app.use(express.json());
@@ -16,8 +19,10 @@ app.use('/matches', matchRouter);
 const { broadCastMatchCreated } = attachWebSocketServer(server)
 app.locals.broadCastMatchCreated = broadCastMatchCreated;
 server.listen(PORT,HOST, () => {
-  const  baseUrl = HOST === '0.0.0.0' ? `http://localhost:${PORT}` : `http://${HOST}:${PORT}`
-  console.log(`Server is running on ${baseUrl}`)
-  console.log(`Websocket Server is running on ${baseUrl.replace('http', 'ws')}/ws`)
+  const protocol = process.env.USE_TLS ? 'https' : 'http';
+  const wsProtocol = process.env.USE_TLS ? 'wss' : 'ws';
+  const displayHost = HOST === '0.0.0.0' ? 'localhost' : HOST;
+  console.log(`Server is running on ${protocol}://${displayHost}:${PORT}`);
+  console.log(`Websocket Server is running on ${wsProtocol}://${displayHost}:${PORT}/ws`);
 })
 
