@@ -5,6 +5,7 @@ const arcjetMode = process.env.ARCJET_MODE === 'DRY_RUN' ? 'DRY_RUN' : 'LIVE';
 if (!arcjetKey) {
     throw new Error("ARCJET_KEY environment variable is required");
 }
+console.log(`Arcjet mode: ${arcjetMode}`)
 export const httpArcjet = arcjet({
         key: arcjetKey,
         rules: [
